@@ -1,0 +1,20 @@
+{
+    "info": {
+        "menu_header": "Vehicle Closet",
+        "menu_open_closet_option": "Open The Vehicle Closet",
+        "menu_open_closet_description": "Opens The Vehicle Closet",
+        "menu_close_closet_option": "Close The Vehicle Closet",
+        "menu_close_closet_description": "Closes The Vehicle Closet",
+        "progress_name": "open_vehicle_closet",
+        "progress_label": "Opening Closet...",
+        "target_label": "Change Clothes"
+    },
+
+    "error": {
+        "framework_error_description": "This Sound Feature Is Only For The QBCore Framework!",
+        "cancellation_title": "Cancelled",
+        "cancellation_description": "Cancelled Opening The Closet!",
+        "vehicle_keys_error_title": "Missing Keys",
+        "vehicle_keys_error_description": "You Don't Have The Keys To This Vehicle!"
+    }
+}
