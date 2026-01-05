@@ -5,33 +5,70 @@ local Config = require 'shared.config'
 -- Functions
 local function vehicleClosetMenu(vehicle)
     if Config.Framework == 'qb' then
-        local closetMenu = {
-            {
-                header = locale('info.menu_header'),
-                icon = 'fa-solid fa-car',
-                isMenuHeader = true
-            },
-            {
-                header = locale('info.menu_open_closet_option'),
-                txt = locale('info.menu_open_closet_description'),
-                icon = 'fa-solid fa-shirt',
-                action = function()
-                    SetVehicleDoorShut(vehicle, 5, false)
-                    TriggerEvent('stark_vehiclecloset:client:changeClothes')
-                end,
-            },
-            {
-                header = locale('info.menu_close_closet_option'),
-                txt = locale('info.menu_close_closet_description'),
-                icon = 'fa-solid fa-lock',
-                action = function()
-                    SetVehicleDoorShut(vehicle, 5, false)
-                    exports['qb-menu']:closeMenu()
-                end,
+        if Config.Menu == 'qb' then
+            local closetMenu = {
+                {
+                    header = locale('info.menu_header'),
+                    icon = 'fa-solid fa-car',
+                    isMenuHeader = true
+                },
+                {
+                    header = locale('info.menu_open_closet_option'),
+                    txt = locale('info.menu_open_closet_description'),
+                    icon = 'fa-solid fa-shirt',
+                    action = function()
+                        SetVehicleDoorShut(vehicle, 5, false)
+                        TriggerEvent('stark_vehiclecloset:client:changeClothes')
+                    end,
+                },
+                {
+                    header = locale('info.menu_close_closet_option'),
+                    txt = locale('info.menu_close_closet_description'),
+                    icon = 'fa-solid fa-lock',
+                    action = function()
+                        SetVehicleDoorShut(vehicle, 5, false)
+                        exports['qb-menu']:closeMenu()
+                    end,
+                }
             }
-        }
 
-        exports['qb-menu']:openMenu(closetMenu)
+            exports['qb-menu']:openMenu(closetMenu)
+        elseif Config.Menu == 'ox' then
+            local closetMenuOptions = {
+                {
+                    title = locale('info.menu_open_closet_option'),
+                    onSelect = function()
+                        SetVehicleDoorShut(vehicle, 5, false)
+                        TriggerEvent('stark_vehiclecloset:client:changeClothes')
+                    end,
+                    icon = 'fa-solid fa-shirt',
+                    iconColor = 'white',
+                    arrow = true,
+                    description = locale('info.menu_open_closet_description'),
+                },
+                {
+                    title = locale('info.menu_close_closet_option'),
+                    onSelect = function()
+                        SetVehicleDoorShut(vehicle, 5, false)
+                        lib.hideContext()
+                    end,
+                    icon = 'fa-solid fa-lock',
+                    iconColor = 'white',
+                    arrow = true,
+                    description = locale('info.menu_close_closet_description'),
+                }
+            }
+
+            lib.registerContext({
+                id = 'vehicle_closet_menu',
+                title = locale('info.menu_header'),
+                canClose = false,
+                position = 'offcenter-right',
+                options = closetMenuOptions
+            })
+
+            lib.showContext('vehicle_closet_menu')
+        end
     elseif Config.Framework == 'qbx' then
         local closetMenuOptions = {
             {
@@ -73,18 +110,69 @@ end
 local function vehicleClosetProgress(vehicle)
     if Config.Framework == 'qb' then
         local QBCore = exports['qb-core']:GetCoreObject()
-        QBCore.Functions.Progressbar(locale('info.progress_name'), locale('info.progress_label'),
-            Config.Progress.duration, false, true,
-            {
-                disableMovement = true,
-                disableCarMovement = true,
-                disableMouse = false,
-                disableCombat = true
-            }, {}, {}, {}, function()
+        if Config.Progress.style == 'qb' then
+            QBCore.Functions.Progressbar(locale('info.progress_name'), locale('info.progress_label'),
+                Config.Progress.duration, false, true,
+                {
+                    disableMovement = true,
+                    disableCarMovement = true,
+                    disableMouse = false,
+                    disableCombat = true
+                }, {}, {}, {}, function()
+                    vehicleClosetMenu(vehicle)
+                end, function()
+                    QBCore.Functions.Notify(locale('error.cancellation_description'), 'error', 5000)
+                end)
+        elseif Config.Progress.style == 'ox_bar' then
+            if lib.progressBar({
+                    duration = Config.Progress.duration,
+                    label = locale('info.progress_label'),
+                    icon = 'fa-solid fa-shirt',
+                    iconColor = '#FFFFFF',
+                    color = '#FF0000',
+                    useWhileDead = false,
+                    canCancel = true,
+                    disable = {
+                        move = true,
+                        car = true,
+                        combat = true,
+                        mouse = false
+                    }
+                }) then
                 vehicleClosetMenu(vehicle)
-            end, function()
-                QBCore.Functions.Notify(locale('error.cancellation_description'), 'error', 5000)
-            end)
+            else
+                lib.notify({
+                    title = locale('error.cancellation_title'),
+                    description = locale('error.cancellation_description'),
+                    position = 'center-right',
+                    type = 'error'
+                })
+            end
+        elseif Config.Progress.style == 'ox_circle' then
+            if lib.progressCircle({
+                    duration = Config.Progress.duration,
+                    label = locale('info.progress_label'),
+                    position = 'bottom',
+                    useWhileDead = false,
+                    canCancel = true,
+                    disable = {
+                        move = true,
+                        car = true,
+                        mouse = false,
+                        combat = true
+                    }
+                })
+            then
+                vehicleClosetMenu(vehicle)
+            else
+                lib.notify({
+                    title = locale('error.cancellation_title'),
+                    description = locale('error.cancellation_description'),
+                    position = 'center-right',
+                    type = 'error'
+                })
+            end
+        end
     elseif Config.Framework == 'qbx' then
         if Config.Progress.style == 'ox_bar' then
             if lib.progressBar({
@@ -174,10 +262,11 @@ end
 
 -- Event
 RegisterNetEvent('stark_vehiclecloset:client:changeClothes', function()
+    if not GetInvokingResource() then return end
     if Config.Framework == 'qb' then
         TriggerServerEvent('InteractSound_SV:PlayOnSource', 'Clothes1', 0.4)
     else
-        lib.print.warn("WARNING: " .. locale('error.framework_error_description'))
+        lib.print.warn("WARNING:" .. locale('error.framework_error_description'))
     end
     TriggerEvent('qb-clothing:client:openOutfitMenu')
 end)
