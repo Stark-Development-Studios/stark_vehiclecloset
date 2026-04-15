@@ -63,47 +63,155 @@ local function vehicleClosetMenu(vehicle)
                 id = 'vehicle_closet_menu',
                 title = locale('info.menu_header'),
                 canClose = false,
-                position = 'offcenter-right',
+                position = 'top-right',
                 options = closetMenuOptions
             })
 
             lib.showContext('vehicle_closet_menu')
+        elseif Config.Menu == 'lation' then
+            local lation_ui = exports.lation_ui
+            local closetMenuOptions = {
+                {
+                    title = locale('info.menu_open_closet_option'),
+                    onSelect = function()
+                        SetVehicleDoorShut(vehicle, 5, false)
+                        TriggerEvent('stark_vehiclecloset:client:changeClothes')
+                    end,
+                    icon = 'fa-solid fa-shirt',
+                    iconColor = '#FFFFFF',
+                    arrow = true,
+                    description = locale('info.menu_open_closet_description'),
+                },
+                {
+                    title = locale('info.menu_close_closet_option'),
+                    onSelect = function()
+                        SetVehicleDoorShut(vehicle, 5, false)
+                        lation_ui:hideMenu()
+                    end,
+                    icon = 'fa-solid fa-lock',
+                    iconColor = '#FFFFFF',
+                    arrow = true,
+                    description = locale('info.menu_close_closet_description'),
+                }
+            }
+
+            lation_ui:registerMenu({
+                id = 'vehicle_closet_menu',
+                title = locale('info.menu_header'),
+                subtitle = locale('info.menu_subtitle'),
+                headerIcon = 'fa-solid fa-car',
+                headerIconColor = '#FFFFFF',
+                canClose = false,
+                position = 'offcenter-right',
+                options = closetMenuOptions
+            })
+
+            lation_ui:showMenu('vehicle_closet_menu')
+        else
+            lib.notify({
+                title = locale('error.unsupported_menu_ui_title'),
+                description = locale('error.unsupported_menu_ui_description'),
+                duration = 5000,
+                position = 'center-right',
+                type = 'error'
+            })
+            Wait(2000)
+            SetVehicleDoorShut(vehicle, 5, false)
         end
     elseif Config.Framework == 'qbx' then
-        local closetMenuOptions = {
-            {
-                title = locale('info.menu_open_closet_option'),
-                onSelect = function()
-                    SetVehicleDoorShut(vehicle, 5, false)
-                    TriggerEvent('stark_vehiclecloset:client:changeClothes')
-                end,
-                icon = 'fa-solid fa-shirt',
-                iconColor = 'white',
-                arrow = true,
-                description = locale('info.menu_open_closet_description'),
-            },
-            {
-                title = locale('info.menu_close_closet_option'),
-                onSelect = function()
-                    SetVehicleDoorShut(vehicle, 5, false)
-                    lib.hideContext()
-                end,
-                icon = 'fa-solid fa-lock',
-                iconColor = 'white',
-                arrow = true,
-                description = locale('info.menu_close_closet_description'),
+        if Config.Menu == 'ox' then
+            local closetMenuOptions = {
+                {
+                    title = locale('info.menu_open_closet_option'),
+                    onSelect = function()
+                        SetVehicleDoorShut(vehicle, 5, false)
+                        TriggerEvent('stark_vehiclecloset:client:changeClothes')
+                    end,
+                    icon = 'fa-solid fa-shirt',
+                    iconColor = 'white',
+                    arrow = true,
+                    description = locale('info.menu_open_closet_description'),
+                },
+                {
+                    title = locale('info.menu_close_closet_option'),
+                    onSelect = function()
+                        SetVehicleDoorShut(vehicle, 5, false)
+                        lib.hideContext()
+                    end,
+                    icon = 'fa-solid fa-lock',
+                    iconColor = 'white',
+                    arrow = true,
+                    description = locale('info.menu_close_closet_description'),
+                }
             }
-        }
 
-        lib.registerContext({
-            id = 'vehicle_closet_menu',
-            title = locale('info.menu_header'),
-            canClose = false,
-            position = 'offcenter-right',
-            options = closetMenuOptions
+            lib.registerContext({
+                id = 'vehicle_closet_menu',
+                title = locale('info.menu_header'),
+                canClose = false,
+                position = 'top-right',
+                options = closetMenuOptions
+            })
+
+            lib.showContext('vehicle_closet_menu')
+        elseif Config.Menu == 'lation' then
+            local lation_ui = exports.lation_ui
+            local closetMenuOptions = {
+                {
+                    title = locale('info.menu_open_closet_option'),
+                    onSelect = function()
+                        SetVehicleDoorShut(vehicle, 5, false)
+                        TriggerEvent('stark_vehiclecloset:client:changeClothes')
+                    end,
+                    icon = 'fa-solid fa-shirt',
+                    iconColor = '#FFFFFF',
+                    arrow = true,
+                    description = locale('info.menu_open_closet_description'),
+                },
+                {
+                    title = locale('info.menu_close_closet_option'),
+                    onSelect = function()
+                        SetVehicleDoorShut(vehicle, 5, false)
+                        lation_ui:hideMenu()
+                    end,
+                    icon = 'fa-solid fa-lock',
+                    iconColor = '#FFFFFF',
+                    arrow = true,
+                    description = locale('info.menu_close_closet_description'),
+                }
+            }
+
+            lation_ui:registerMenu({
+                id = 'vehicle_closet_menu',
+                title = locale('info.menu_header'),
+                subtitle = locale('info.menu_subtitle'),
+                headerIcon = 'fa-solid fa-car',
+                headerIconColor = '#FFFFFF',
+                canClose = false,
+                position = 'offcenter-right',
+                options = closetMenuOptions
+            })
+
+            lation_ui:showMenu('vehicle_closet_menu')
+        else
+            lib.notify({
+                title = locale('error.unsupported_menu_ui_title'),
+                description = locale('error.unsupported_menu_ui_description'),
+                duration = 5000,
+                position = 'center-right',
+                type = 'error'
+            })
+            Wait(2000)
+            SetVehicleDoorShut(vehicle, 5, false)
+        end
+    else
+        lib.notify({
+            title = locale('error.unsupported_framework_error_title'),
+            description = locale('error.unsupported_framework_error_description'),
+            duration = 5000,
+            position = 'center-right',
+            type = 'error'
         })
-
-        lib.showContext('vehicle_closet_menu')
     end
 end
 
@@ -122,14 +230,13 @@ local function vehicleClosetProgress(vehicle)
                     vehicleClosetMenu(vehicle)
                 end, function()
                     QBCore.Functions.Notify(locale('error.cancellation_description'), 'error', 5000)
+                    Wait(2000)
+                    SetVehicleDoorShut(vehicle, 5, false)
                 end)
         elseif Config.Progress.style == 'ox_bar' then
             if lib.progressBar({
                     duration = Config.Progress.duration,
                     label = locale('info.progress_label'),
-                    icon = 'fa-solid fa-shirt',
-                    iconColor = '#FFFFFF',
-                    color = '#FF0000',
                     useWhileDead = false,
                     canCancel = true,
                     disable = {
@@ -147,6 +254,8 @@ local function vehicleClosetProgress(vehicle)
                     position = 'center-right',
                     type = 'error'
                 })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
             end
         elseif Config.Progress.style == 'ox_circle' then
             if lib.progressCircle({
@@ -171,16 +280,55 @@ local function vehicleClosetProgress(vehicle)
                     position = 'center-right',
                     type = 'error'
                 })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
             end
+        elseif Config.Progress.style == 'lation' then
+            local lation_ui = exports.lation_ui
+            if lation_ui:progressBar({
+                    duration = Config.Progress.duration,
+                    label = locale('info.progress_label'),
+                    icon = 'fa-solid fa-shirt',
+                    iconColor = '#FFFFFF',
+                    color = '#FF0000',
+                    -- steps = {},
+                    useWhileDead = false,
+                    canCancel = true,
+                    disable = {
+                        move = true,
+                        sprint = true,
+                        car = true,
+                        combat = true,
+                        mouse = false
+                    }
+                }) then
+                vehicleClosetMenu(vehicle)
+            else
+                lation_ui:notify({
+                    title = locale('error.cancellation_title'),
+                    message = locale('error.cancellation_description'),
+                    type = 'error',
+                    position = 'center-right',
+                })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            end
+        else
+            lib.notify({
+                title = locale('error.unsupported_progress_ui_title'),
+                description = locale('error.unsupported_progress_ui_description'),
+                duration = 5000,
+                position = 'center-right',
+                type = 'error'
+            })
+            Wait(2000)
+            SetVehicleDoorShut(vehicle, 5, false)
         end
     elseif Config.Framework == 'qbx' then
         if Config.Progress.style == 'ox_bar' then
             if lib.progressBar({
                     duration = Config.Progress.duration,
                     label = locale('info.progress_label'),
-                    icon = 'fa-solid fa-shirt',
-                    iconColor = '#FFFFFF',
-                    color = '#FF0000',
                     useWhileDead = false,
                     canCancel = true,
                     disable = {
@@ -198,6 +346,8 @@ local function vehicleClosetProgress(vehicle)
                     position = 'center-right',
                     type = 'error'
                 })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
             end
         elseif Config.Progress.style == 'ox_circle' then
             if lib.progressCircle({
@@ -222,8 +372,58 @@ local function vehicleClosetProgress(vehicle)
                     position = 'center-right',
                     type = 'error'
                 })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
             end
+        elseif Config.Progress.style == 'lation' then
+            local lation_ui = exports.lation_ui
+            if lation_ui:progressBar({
+                    duration = Config.Progress.duration,
+                    label = locale('info.progress_label'),
+                    icon = 'fa-solid fa-shirt',
+                    iconColor = '#FFFFFF',
+                    color = '#FF0000',
+                    -- steps = {},
+                    useWhileDead = false,
+                    canCancel = true,
+                    disable = {
+                        move = true,
+                        sprint = true,
+                        car = true,
+                        combat = true,
+                        mouse = false
+                    }
+                }) then
+                vehicleClosetMenu(vehicle)
+            else
+                lation_ui:notify({
+                    title = locale('error.cancellation_title'),
+                    message = locale('error.cancellation_description'),
+                    type = 'error',
+                    position = 'center-right',
+                })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            end
+        else
+            lib.notify({
+                title = locale('error.unsupported_progress_ui_title'),
+                description = locale('error.unsupported_progress_ui_description'),
+                duration = 5000,
+                position = 'center-right',
+                type = 'error'
+            })
+            Wait(2000)
+            SetVehicleDoorShut(vehicle, 5, false)
         end
+    else
+        lib.notify({
+            title = locale('error.unsupported_framework_error_title'),
+            description = locale('error.unsupported_framework_error_description'),
+            duration = 5000,
+            position = 'center-right',
+            type = 'error'
+        })
     end
 end
 
@@ -257,6 +457,16 @@ local function hasKeys(vehicle)
         else
             vehicleClosetProgress(vehicle)
         end
+    else
+        lib.notify({
+            title = locale('error.unsupported_framework_error_title'),
+            description = locale('error.unsupported_framework_error_description'),
+            duration = 5000,
+            position = 'center-right',
+            type = 'error'
+        })
+        Wait(2000)
+        SetVehicleDoorShut(vehicle, 5, false)
     end
 end
 
@@ -265,8 +475,10 @@ RegisterNetEvent('stark_vehiclecloset:client:changeClothes', function()
     if not GetInvokingResource() then return end
     if Config.Framework == 'qb' then
         TriggerServerEvent('InteractSound_SV:PlayOnSource', 'Clothes1', 0.4)
+    elseif Config.Framework == 'qbx' and GetResourceState('interact-sound') == 'started' then
+        TriggerServerEvent('InteractSound_SV:PlayOnSource', 'Clothes1', 0.4)
     else
-        lib.print.warn("WARNING:" .. locale('error.framework_error_description'))
+        lib.print.warn("WARNING: " .. locale('error.framework_error_description'))
     end
     TriggerEvent('qb-clothing:client:openOutfitMenu')
 end)
@@ -301,6 +513,14 @@ CreateThread(function()
                 SetVehicleDoorOpen(Vehicle, 5, false, false)
                 hasKeys(Vehicle)
             end
+        })
+    else
+        lib.notify({
+            title = locale('error.unsupported_target_title'),
+            description = locale('error.unsupported_target_description'),
+            duration = 5000,
+            position = 'center-right',
+            type = 'error'
         })
     end
 end)

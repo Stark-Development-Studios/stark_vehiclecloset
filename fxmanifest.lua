@@ -10,17 +10,16 @@ name 'stark_vehiclecloset'
 
 author 'Adama Stark'
 
-version '1.0.2'
+version '2.0.0'
 
-repository 'https://github.com/Stark-Development-Studios/stark_vehiclecloset'
+repository 'https://github.com/AdamaStark-N7/stark_vehiclecloset'
 
-description 'A Vehicle Clothing/Outfit Change Script For FiveM.'
+description 'A Vehicle Clothing/Outfit Change Script'
 
 ox_lib 'locale'
 
 shared_scripts {
     '@ox_lib/init.lua',
-    '@lation_ui/init.lua'
 }
 
 client_scripts {
