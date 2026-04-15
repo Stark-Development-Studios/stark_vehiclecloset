@@ -42,11 +42,11 @@ Stark Vehicle Closet is a resource that allows for players to change their outfi
 
 # Dependencies
 1. ox_lib
-2. lation ui **OPTIONAL**
+2. Optional: lation_ui
 2. qb-target or ox_target
 3. qb-vehiclekeys or qbx_vehiclekeys
 4. qb-menu (QBCore)
-5. [interact-sound](https://github.com/qbcore-framework/interact-sound) **OPTIONAL FOR QBOX**
+5. Optional: [interact-sound](https://github.com/qbcore-framework/interact-sound) (Qbox)
 
 # Previews
 

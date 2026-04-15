@@ -12,9 +12,9 @@ author 'Adama Stark'
 
 version '2.0.0'
 
-repository 'https://github.com/AdamaStark-N7/stark_vehiclecloset'
+repository 'https://github.com/Stark-Development-Studios/stark_vehiclecloset'
 
-description 'A Vehicle Clothing/Outfit Change Script'
+description 'A Vehicle Clothing/Outfit Change Script For FiveM.'
 
 ox_lib 'locale'
 
