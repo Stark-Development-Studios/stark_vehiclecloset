@@ -10,9 +10,9 @@ return {
     Menu = 'ox',       -- supported: 'qb', 'ox', or 'lation'
 
     Progress = {
-        style = 'ox_bar', -- supported: 'qb', 'ox_bar', 'ox_circle', or 'lation'
+        style = 'ox_circle', -- supported: 'qb', 'ox_bar', 'ox_circle', or 'lation'
         duration = 2000
     },
 
-    Debug = true
+    Debug = false
 }
