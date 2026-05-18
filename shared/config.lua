@@ -1,7 +1,7 @@
 return {
     VersionCheck = true,
 
-    VehicleKeysRequired = true,
+    Debug = false,
 
     Framework = 'qbx', -- supported: 'qb' or 'qbx'
 
@@ -14,5 +14,8 @@ return {
         duration = 2000
     },
 
-    Debug = false
+    VehicleKeys = {
+        required = true, -- True Requires The Player To Have Keys To Access The Closet, False Disables It
+        type = 'qbx'     -- supported: 'qb' (qb-vehiclekeys), 'qbx' (qbx_vehiclekeys), or 'wasabi' (wasabi_carlock)
+    }
 }

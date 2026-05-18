@@ -2,7 +2,10 @@ if not lib.checkDependency('ox_lib', '3.33.0', true) then return end
 
 local Config = require 'shared.config'
 
--- Functions
+local lation_ui = exports.lation_ui
+
+local ox_target = exports.ox_target
+
 local function vehicleClosetMenu(vehicle)
     if Config.Framework == 'qb' then
         if Config.Menu == 'qb' then
@@ -69,7 +72,6 @@ local function vehicleClosetMenu(vehicle)
 
             lib.showContext('vehicle_closet_menu')
         elseif Config.Menu == 'lation' then
-            local lation_ui = exports.lation_ui
             local closetMenuOptions = {
                 {
                     title = locale('info.menu_open_closet_option'),
@@ -155,7 +157,6 @@ local function vehicleClosetMenu(vehicle)
 
             lib.showContext('vehicle_closet_menu')
         elseif Config.Menu == 'lation' then
-            local lation_ui = exports.lation_ui
             local closetMenuOptions = {
                 {
                     title = locale('info.menu_open_closet_option'),
@@ -243,7 +244,8 @@ local function vehicleClosetProgress(vehicle)
                         move = true,
                         car = true,
                         combat = true,
-                        mouse = false
+                        mouse = false,
+                        sprint = true
                     }
                 }) then
                 vehicleClosetMenu(vehicle)
@@ -251,6 +253,7 @@ local function vehicleClosetProgress(vehicle)
                 lib.notify({
                     title = locale('error.cancellation_title'),
                     description = locale('error.cancellation_description'),
+                    duration = 5000,
                     position = 'center-right',
                     type = 'error'
                 })
@@ -267,8 +270,9 @@ local function vehicleClosetProgress(vehicle)
                     disable = {
                         move = true,
                         car = true,
+                        combat = true,
                         mouse = false,
-                        combat = true
+                        sprint = true
                     }
                 })
             then
@@ -277,6 +281,7 @@ local function vehicleClosetProgress(vehicle)
                 lib.notify({
                     title = locale('error.cancellation_title'),
                     description = locale('error.cancellation_description'),
+                    duration = 5000,
                     position = 'center-right',
                     type = 'error'
                 })
@@ -284,14 +289,18 @@ local function vehicleClosetProgress(vehicle)
                 SetVehicleDoorShut(vehicle, 5, false)
             end
         elseif Config.Progress.style == 'lation' then
-            local lation_ui = exports.lation_ui
             if lation_ui:progressBar({
                     duration = Config.Progress.duration,
                     label = locale('info.progress_label'),
                     icon = 'fa-solid fa-shirt',
                     iconColor = '#FFFFFF',
                     color = '#FF0000',
-                    -- steps = {},
+                    steps = {
+                        { description = 'Inserting The Car Key...' },
+                        { description = 'Turning The Key...' },
+                        { description = 'Unlocking The Closet...' }
+
+                    },
                     useWhileDead = false,
                     canCancel = true,
                     disable = {
@@ -307,6 +316,7 @@ local function vehicleClosetProgress(vehicle)
                 lation_ui:notify({
                     title = locale('error.cancellation_title'),
                     message = locale('error.cancellation_description'),
+                    duration = 5000,
                     type = 'error',
                     position = 'center-right',
                 })
@@ -335,7 +345,8 @@ local function vehicleClosetProgress(vehicle)
                         move = true,
                         car = true,
                         combat = true,
-                        mouse = false
+                        mouse = false,
+                        sprint = true
                     }
                 }) then
                 vehicleClosetMenu(vehicle)
@@ -343,6 +354,7 @@ local function vehicleClosetProgress(vehicle)
                 lib.notify({
                     title = locale('error.cancellation_title'),
                     description = locale('error.cancellation_description'),
+                    duration = 5000,
                     position = 'center-right',
                     type = 'error'
                 })
@@ -359,8 +371,9 @@ local function vehicleClosetProgress(vehicle)
                     disable = {
                         move = true,
                         car = true,
+                        combat = true,
                         mouse = false,
-                        combat = true
+                        sprint = true
                     }
                 })
             then
@@ -369,6 +382,7 @@ local function vehicleClosetProgress(vehicle)
                 lib.notify({
                     title = locale('error.cancellation_title'),
                     description = locale('error.cancellation_description'),
+                    duration = 5000,
                     position = 'center-right',
                     type = 'error'
                 })
@@ -376,14 +390,17 @@ local function vehicleClosetProgress(vehicle)
                 SetVehicleDoorShut(vehicle, 5, false)
             end
         elseif Config.Progress.style == 'lation' then
-            local lation_ui = exports.lation_ui
             if lation_ui:progressBar({
                     duration = Config.Progress.duration,
                     label = locale('info.progress_label'),
                     icon = 'fa-solid fa-shirt',
                     iconColor = '#FFFFFF',
                     color = '#FF0000',
-                    -- steps = {},
+                    steps = {
+                        { description = 'Inserting The Car Key...' },
+                        { description = 'Turning The Key...' },
+                        { description = 'Unlocking The Closet...' }
+                    },
                     useWhileDead = false,
                     canCancel = true,
                     disable = {
@@ -399,6 +416,7 @@ local function vehicleClosetProgress(vehicle)
                 lation_ui:notify({
                     title = locale('error.cancellation_title'),
                     message = locale('error.cancellation_description'),
+                    duration = 5000,
                     type = 'error',
                     position = 'center-right',
                 })
@@ -430,26 +448,64 @@ end
 local function hasKeys(vehicle)
     if Config.Framework == 'qb' then
         local QBCore = exports['qb-core']:GetCoreObject()
-        if Config.VehicleKeysRequired then
-            local plate = QBCore.Functions.GetPlate(vehicle)
-            local hasKeys = exports['qb-vehiclekeys']:HasKeys(plate)
-            if hasKeys then
-                vehicleClosetProgress(vehicle)
+        local plate = lib.getVehicleProperties(vehicle).plate
+        if Config.VehicleKeys.required then
+            if Config.VehicleKeys.type == 'qb' then
+                local hasKey = exports['qb-vehiclekeys']:HasKeys(plate)
+                if hasKey then
+                    vehicleClosetProgress(vehicle)
+                else
+                    QBCore.Functions.Notify(locale('error.vehicle_keys_error_description'), 'error', 5000)
+                end
+            elseif Config.VehicleKeys.type == 'wasabi' then
+                local wasabi_carlock = exports.wasabi_carlock
+                local hasKey = wasabi_carlock:HasKey(plate)
+                if hasKey then
+                    vehicleClosetProgress(vehicle)
+                else
+                    QBCore.Functions.Notify(locale('error.vehicle_keys_error_description'), 'error', 5000)
+                end
             else
-                QBCore.Functions.Notify(locale('error.vehicle_keys_error_description'), 'error', 5000)
+                QBCore.Functions.Notify(locale('error.unsupported_vehicle_key_description'), 'error', 5000)
             end
         else
             vehicleClosetProgress(vehicle)
         end
     elseif Config.Framework == 'qbx' then
-        if Config.VehicleKeysRequired then
-            local hasKeys = exports.qbx_vehiclekeys:HasKeys(vehicle)
-            if hasKeys then
-                vehicleClosetProgress(vehicle)
+        local plate = lib.getVehicleProperties(vehicle).plate
+        if Config.VehicleKeys.required then
+            if Config.VehicleKeys.type == 'qbx' then
+                local hasKey = exports.qbx_vehiclekeys:HasKeys(vehicle)
+                if hasKey then
+                    vehicleClosetProgress(vehicle)
+                else
+                    lib.notify({
+                        title = locale('error.vehicle_keys_error_title'),
+                        description = locale('error.vehicle_keys_error_description'),
+                        duration = 5000,
+                        position = 'center-right',
+                        type = 'error'
+                    })
+                end
+            elseif Config.VehicleKeys.type == 'wasabi' then
+                local wasabi_carlock = exports.wasabi_carlock
+                local hasKey = wasabi_carlock:HasKey(plate)
+                if hasKey then
+                    vehicleClosetProgress(vehicle)
+                else
+                    lib.notify({
+                        title = locale('error.vehicle_keys_error_title'),
+                        description = locale('error.vehicle_keys_error_description'),
+                        duration = 5000,
+                        position = 'center-right',
+                        type = 'error'
+                    })
+                end
             else
                 lib.notify({
-                    title = locale('error.vehicle_keys_error_title'),
-                    description = locale('error.vehicle_keys_error_description'),
+                    title = locale('error.unsupported_vehicle_key_title'),
+                    description = locale('error.unsupported_vehicle_key_description'),
+                    duration = 5000,
                     position = 'center-right',
                     type = 'error'
                 })
@@ -470,7 +526,6 @@ local function hasKeys(vehicle)
     end
 end
 
--- Event
 RegisterNetEvent('stark_vehiclecloset:client:changeClothes', function()
     if not GetInvokingResource() then return end
     if Config.Framework == 'qb' then
@@ -483,7 +538,6 @@ RegisterNetEvent('stark_vehiclecloset:client:changeClothes', function()
     TriggerEvent('qb-clothing:client:openOutfitMenu')
 end)
 
--- Main Thread
 CreateThread(function()
     if Config.Target == 'qb' and GetResourceState('qb-target') == 'started' then
         exports['qb-target']:AddTargetBone('boot', {
@@ -501,7 +555,6 @@ CreateThread(function()
             distance = 3.0
         })
     elseif Config.Target == 'ox' and GetResourceState('ox_target') == 'started' then
-        local ox_target = exports.ox_target
         ox_target:addGlobalVehicle({
             label = locale('info.target_label'),
             icon = 'fa-solid fa-vest',

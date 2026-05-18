@@ -3,19 +3,18 @@ if not lib.checkDependency('ox_lib', '3.33.0', true) then return end
 local Config = require 'shared.config'
 
 Framework = nil
-QBCore = nil
-QBX = nil
 
 if Config.VersionCheck then
-    lib.versionCheck('Stark-Development-Studios/stark_vehiclecloset')
+    lib.versionCheck('AdamaStark-N7/stark_vehiclecloset')
 end
 
 if GetResourceState('qb-core') == 'started' and GetResourceState('qbx_core') ~= 'started' then
     Framework = 'qb'
-    QBCore = exports['qb-core']:GetCoreObject()
 elseif GetResourceState('qbx_core') == 'started' then
     Framework = 'qbx'
-    QBX = exports.qbx_core
+else
+    Framework = nil
+    lib.print.error(locale('error.framework_warning'))
 end
 
 if Config.Debug then

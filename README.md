@@ -22,6 +22,13 @@ Lation's UI interface can be purchased here from his Tebex!
 
 * Link: [Lation Modern UI](https://lationscripts.com/product/modern-ui).
 
+## Wasabi
+I would like to thank Wasabi for developing a clean and sophisticated vehicle keys script for FiveM which I am proud to directly support in this resource.
+
+Wasabi's vehicle keys resource can be purchased here from his Tebex!
+
+* Link: [Advanced Car Lock](https://wasabi-scripts.tebex.io/package/5057933)
+
 # Description
 Stark Vehicle Closet is a resource that allows for players to change their outfits at any vehicle that they have the keys for, eliminating the need to be at a clothing store.
 
@@ -35,6 +42,7 @@ Stark Vehicle Closet is a resource that allows for players to change their outfi
 # Features
 1. Access to the outfit change menu at a vehicle
 2. Customizable option for the player to change their outfits only at vehicles they have the keys for
+3. Ability to add support for more than one vehicle key resource
 
 # Supported Frameworks
 1. QBCore
@@ -42,12 +50,32 @@ Stark Vehicle Closet is a resource that allows for players to change their outfi
 
 # Dependencies
 1. ox_lib
-2. Optional: lation_ui
-2. qb-target or ox_target
-3. qb-vehiclekeys or qbx_vehiclekeys
-4. qb-menu (QBCore)
-5. Optional: [interact-sound](https://github.com/qbcore-framework/interact-sound) (Qbox)
+2. lation_ui **OPTIONAL**
+3. qb-target or ox_target
+4. qb-vehiclekeys, qbx_vehiclekeys, or wasabi_carlock
+5. qb-menu (QBCore)
+6. [interact-sound](https://github.com/qbcore-framework/interact-sound) **OPTIONAL FOR QBOX**
+
+# Coming Soon
+1. Renewed Vehiclekeys Support
+    - Preview or Purchase: [Renewed Vehiclekeys](https://renewed.tebex.io/package/5885692)
 
 # Previews
 
-* COMING SOON!
+## Ox Target Label
+![Preview: Ox Target Label](https://r2.fivemanage.com/BZUhJPECnmtuNrWqUmCYy/FiveM_b3570_GTAProcess_GqIclnLnYA.jpg)
+
+## Ox Lib Progress Circle
+![Preview: Ox Lib Progress Circle](https://r2.fivemanage.com/BZUhJPECnmtuNrWqUmCYy/FiveM_b3570_GTAProcess_p5PXmjouOm.jpg)
+
+## Lation Modern UI Progress Bar
+![Preview: Lation Modern UI Progress Bar](https://r2.fivemanage.com/BZUhJPECnmtuNrWqUmCYy/FiveM_b3570_GTAProcess_eQ1Pt8cAf6.jpg)
+
+## Ox Lib Menu
+![Preview: Ox Lib Menu](https://r2.fivemanage.com/BZUhJPECnmtuNrWqUmCYy/FiveM_b3570_GTAProcess_cHbvOGnWLG.jpg)
+
+## Lation Modern UI Menu
+![Preview: Lation Modern UI Menu](https://r2.fivemanage.com/BZUhJPECnmtuNrWqUmCYy/FiveM_b3570_GTAProcess_Lwu3Lvtg8g.jpg)
+
+## Illenium Appearance Clothing Menu
+![Preview: Illenium Appearance Clothing Menu](https://r2.fivemanage.com/BZUhJPECnmtuNrWqUmCYy/FiveM_b3570_GTAProcess_B6Wgt1LCgE.jpg)

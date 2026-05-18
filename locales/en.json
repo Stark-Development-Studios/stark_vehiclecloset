@@ -12,6 +12,7 @@
     },
 
     "error": {
+        "framework_warning": "The Framework Could Not Be Initialized!",
         "framework_error_description": "This Sound Feature Is Only For The QBCore Framework!",
         "cancellation_title": "Cancelled",
         "cancellation_description": "Cancelled Opening The Closet!",
@@ -24,6 +25,8 @@
         "unsupported_progress_ui_title": "Vehicle Closet",
         "unsupported_progress_ui_description": "Your Selected Progress UI Is Not Currently Supported By This Script!",
         "unsupported_target_title": "Vehicle Closet",
-        "unsupported_target_description": "Your Selected Targeting Resource Is Not Currently Supported By This Script!"
+        "unsupported_target_description": "Your Selected Targeting Resource Is Not Currently Supported By This Script!",
+        "unsupported_vehicle_key_title": "Vehicle Closet",
+        "unsupported_vehicle_key_description": "Your Selected Vehicle Key Resource Is Not Currently Supported By This Script!"
     }
 }

@@ -10,11 +10,11 @@ name 'stark_vehiclecloset'
 
 author 'Adama Stark'
 
-version '2.0.1'
+version '3.0.0'
 
-repository 'https://github.com/Stark-Development-Studios/stark_vehiclecloset'
+repository 'https://github.com/AdamaStark-N7/stark_vehiclecloset'
 
-description 'A Vehicle Clothing/Outfit Change Script For FiveM.'
+description 'A Vehicle Clothing/Outfit Change Script For Qbox & QBCore'
 
 ox_lib 'locale'
 
