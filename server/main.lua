@@ -5,7 +5,7 @@ local Config = require 'shared.config'
 Framework = nil
 
 if Config.VersionCheck then
-    lib.versionCheck('AdamaStark-N7/stark_vehiclecloset')
+    lib.versionCheck('Stark-Development-Studios/stark_vehiclecloset')
 end
 
 if GetResourceState('qb-core') == 'started' and GetResourceState('qbx_core') ~= 'started' then
