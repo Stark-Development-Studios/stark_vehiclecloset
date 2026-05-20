@@ -8,6 +8,7 @@ local ox_target = exports.ox_target
 
 local function vehicleClosetMenu(vehicle)
     if Config.Framework == 'qb' then
+        local QBCore = exports['qb-core']:GetCoreObject()
         if Config.Menu == 'qb' then
             local closetMenu = {
                 {
@@ -21,7 +22,7 @@ local function vehicleClosetMenu(vehicle)
                     icon = 'fa-solid fa-shirt',
                     action = function()
                         SetVehicleDoorShut(vehicle, 5, false)
-                        TriggerEvent('stark_vehiclecloset:client:changeClothes')
+                        TriggerEvent('stark_vehiclecloset:client:changeClothing')
                     end,
                 },
                 {
@@ -42,7 +43,7 @@ local function vehicleClosetMenu(vehicle)
                     title = locale('info.menu_open_closet_option'),
                     onSelect = function()
                         SetVehicleDoorShut(vehicle, 5, false)
-                        TriggerEvent('stark_vehiclecloset:client:changeClothes')
+                        TriggerEvent('stark_vehiclecloset:client:changeClothing')
                     end,
                     icon = 'fa-solid fa-shirt',
                     iconColor = 'white',
@@ -77,7 +78,7 @@ local function vehicleClosetMenu(vehicle)
                     title = locale('info.menu_open_closet_option'),
                     onSelect = function()
                         SetVehicleDoorShut(vehicle, 5, false)
-                        TriggerEvent('stark_vehiclecloset:client:changeClothes')
+                        TriggerEvent('stark_vehiclecloset:client:changeClothing')
                     end,
                     icon = 'fa-solid fa-shirt',
                     iconColor = '#FFFFFF',
@@ -110,15 +111,34 @@ local function vehicleClosetMenu(vehicle)
 
             lation_ui:showMenu('vehicle_closet_menu')
         else
-            lib.notify({
-                title = locale('error.unsupported_menu_ui_title'),
-                description = locale('error.unsupported_menu_ui_description'),
-                duration = 5000,
-                position = 'center-right',
-                type = 'error'
-            })
-            Wait(2000)
-            SetVehicleDoorShut(vehicle, 5, false)
+            if Config.Notify == 'ox' then
+                lib.notify({
+                    title = locale('error.unsupported_menu_ui_title'),
+                    description = locale('error.unsupported_menu_ui_description'),
+                    duration = 5000,
+                    position = 'center-right',
+                    type = 'error'
+                })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            elseif Config.Notify == 'lation' then
+                lation_ui:notify({
+                    title = locale('error.unsupported_menu_ui_title'),
+                    message = locale('error.unsupported_menu_ui_description'),
+                    type = 'error',
+                    duration = 5000,
+                    position = 'center-right'
+                })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            elseif Config.Notify == 'qb' then
+                QBCore.Functions.Notify(locale('error.unsupported_menu_ui_description'), 'error', 5000)
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            else
+                lib.print.error(locale('error.notification_warning'))
+                SetVehicleDoorShut(vehicle, 5, false)
+            end
         end
     elseif Config.Framework == 'qbx' then
         if Config.Menu == 'ox' then
@@ -127,7 +147,7 @@ local function vehicleClosetMenu(vehicle)
                     title = locale('info.menu_open_closet_option'),
                     onSelect = function()
                         SetVehicleDoorShut(vehicle, 5, false)
-                        TriggerEvent('stark_vehiclecloset:client:changeClothes')
+                        TriggerEvent('stark_vehiclecloset:client:changeClothing')
                     end,
                     icon = 'fa-solid fa-shirt',
                     iconColor = 'white',
@@ -162,7 +182,7 @@ local function vehicleClosetMenu(vehicle)
                     title = locale('info.menu_open_closet_option'),
                     onSelect = function()
                         SetVehicleDoorShut(vehicle, 5, false)
-                        TriggerEvent('stark_vehiclecloset:client:changeClothes')
+                        TriggerEvent('stark_vehiclecloset:client:changeClothing')
                     end,
                     icon = 'fa-solid fa-shirt',
                     iconColor = '#FFFFFF',
@@ -195,24 +215,33 @@ local function vehicleClosetMenu(vehicle)
 
             lation_ui:showMenu('vehicle_closet_menu')
         else
-            lib.notify({
-                title = locale('error.unsupported_menu_ui_title'),
-                description = locale('error.unsupported_menu_ui_description'),
-                duration = 5000,
-                position = 'center-right',
-                type = 'error'
-            })
-            Wait(2000)
-            SetVehicleDoorShut(vehicle, 5, false)
+            if Config.Notify == 'ox' then
+                lib.notify({
+                    title = locale('error.unsupported_menu_ui_title'),
+                    description = locale('error.unsupported_menu_ui_description'),
+                    duration = 5000,
+                    position = 'center-right',
+                    type = 'error'
+                })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            elseif Config.Notify == 'lation' then
+                lation_ui:notify({
+                    title = locale('error.unsupported_menu_ui_title'),
+                    message = locale('error.unsupported_menu_ui_description'),
+                    type = 'error',
+                    duration = 5000,
+                    position = 'center-right'
+                })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            else
+                lib.print.error(locale('error.notification_warning'))
+                SetVehicleDoorShut(vehicle, 5, false)
+            end
         end
     else
-        lib.notify({
-            title = locale('error.unsupported_framework_error_title'),
-            description = locale('error.unsupported_framework_error_description'),
-            duration = 5000,
-            position = 'center-right',
-            type = 'error'
-        })
+        lib.print.error(locale('error.unsupported_framework_error_description'))
     end
 end
 
@@ -324,15 +353,34 @@ local function vehicleClosetProgress(vehicle)
                 SetVehicleDoorShut(vehicle, 5, false)
             end
         else
-            lib.notify({
-                title = locale('error.unsupported_progress_ui_title'),
-                description = locale('error.unsupported_progress_ui_description'),
-                duration = 5000,
-                position = 'center-right',
-                type = 'error'
-            })
-            Wait(2000)
-            SetVehicleDoorShut(vehicle, 5, false)
+            if Config.Notify == 'ox' then
+                lib.notify({
+                    title = locale('error.unsupported_progress_ui_title'),
+                    description = locale('error.unsupported_progress_ui_description'),
+                    duration = 5000,
+                    position = 'center-right',
+                    type = 'error'
+                })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            elseif Config.Notify == 'lation' then
+                lation_ui:notify({
+                    title = locale('error.unsupported_progress_ui_title'),
+                    message = locale('error.unsupported_progress_ui_description'),
+                    type = 'error',
+                    duration = 5000,
+                    position = 'center-right'
+                })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            elseif Config.Notify == 'qb' then
+                QBCore.Functions.Notify(locale('error.unsupported_progress_ui_description'), 'error', 5000)
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            else
+                lib.print.error(locale('error.notification_warning'))
+                SetVehicleDoorShut(vehicle, 5, false)
+            end
         end
     elseif Config.Framework == 'qbx' then
         if Config.Progress.style == 'ox_bar' then
@@ -424,24 +472,33 @@ local function vehicleClosetProgress(vehicle)
                 SetVehicleDoorShut(vehicle, 5, false)
             end
         else
-            lib.notify({
-                title = locale('error.unsupported_progress_ui_title'),
-                description = locale('error.unsupported_progress_ui_description'),
-                duration = 5000,
-                position = 'center-right',
-                type = 'error'
-            })
-            Wait(2000)
-            SetVehicleDoorShut(vehicle, 5, false)
+            if Config.Notify == 'ox' then
+                lib.notify({
+                    title = locale('error.unsupported_progress_ui_title'),
+                    description = locale('error.unsupported_progress_ui_description'),
+                    duration = 5000,
+                    position = 'center-right',
+                    type = 'error'
+                })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            elseif Config.Notify == 'lation' then
+                lation_ui:notify({
+                    title = locale('error.unsupported_progress_ui_title'),
+                    message = locale('error.unsupported_progress_ui_description'),
+                    type = 'error',
+                    duration = 5000,
+                    position = 'center-right'
+                })
+                Wait(2000)
+                SetVehicleDoorShut(vehicle, 5, false)
+            else
+                lib.print.error(locale('error.notification_warning'))
+                SetVehicleDoorShut(vehicle, 5, false)
+            end
         end
     else
-        lib.notify({
-            title = locale('error.unsupported_framework_error_title'),
-            description = locale('error.unsupported_framework_error_description'),
-            duration = 5000,
-            position = 'center-right',
-            type = 'error'
-        })
+        lib.print.error(locale('error.unsupported_framework_error_description'))
     end
 end
 
@@ -455,7 +512,35 @@ local function hasKeys(vehicle)
                 if hasKey then
                     vehicleClosetProgress(vehicle)
                 else
-                    QBCore.Functions.Notify(locale('error.vehicle_keys_error_description'), 'error', 5000)
+                    -- Player Doesn't Have Keys
+                    if Config.Notify == 'qb' then
+                        QBCore.Functions.Notify(locale('error.vehicle_keys_error_description'), 'error', 5000)
+                        Wait(2000)
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    elseif Config.Notify == 'ox' then
+                        lib.notify({
+                            title = locale('error.vehicle_keys_error_title'),
+                            description = locale('error.vehicle_keys_error_description'),
+                            duration = 5000,
+                            position = 'center-right',
+                            type = 'error'
+                        })
+                        Wait(2000)
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    elseif Config.Notify == 'lation' then
+                        lation_ui:notify({
+                            title = locale('error.vehicle_keys_error_title'),
+                            message = locale('error.vehicle_keys_error_description'),
+                            type = 'error',
+                            duration = 5000,
+                            position = 'center-right'
+                        })
+                        Wait(2000)
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    else
+                        lib.print.error(locale('error.notification_warning'))
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    end
                 end
             elseif Config.VehicleKeys.type == 'wasabi' then
                 local wasabi_carlock = exports.wasabi_carlock
@@ -463,12 +548,69 @@ local function hasKeys(vehicle)
                 if hasKey then
                     vehicleClosetProgress(vehicle)
                 else
-                    QBCore.Functions.Notify(locale('error.vehicle_keys_error_description'), 'error', 5000)
+                    -- Player Doesn't Have Keys
+                    if Config.Notify == 'qb' then
+                        QBCore.Functions.Notify(locale('error.vehicle_keys_error_description'), 'error', 5000)
+                        Wait(2000)
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    elseif Config.Notify == 'ox' then
+                        lib.notify({
+                            title = locale('error.vehicle_keys_error_title'),
+                            description = locale('error.vehicle_keys_error_description'),
+                            duration = 5000,
+                            position = 'center-right',
+                            type = 'error'
+                        })
+                        Wait(2000)
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    elseif Config.Notify == 'lation' then
+                        lation_ui:notify({
+                            title = locale('error.vehicle_keys_error_title'),
+                            message = locale('error.vehicle_keys_error_description'),
+                            type = 'error',
+                            duration = 5000,
+                            position = 'center-right'
+                        })
+                        Wait(2000)
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    else
+                        lib.print.error(locale('error.notification_warning'))
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    end
                 end
             else
-                QBCore.Functions.Notify(locale('error.unsupported_vehicle_key_description'), 'error', 5000)
+                -- Unsupported Vehicle Key Resource
+                if Config.Notify == 'qb' then
+                    QBCore.Functions.Notify(locale('error.unsupported_vehicle_key_description'), 'error', 5000)
+                    Wait(2000)
+                    SetVehicleDoorShut(vehicle, 5, false)
+                elseif Config.Notify == 'ox' then
+                    lib.notify({
+                        title = locale('error.unsupported_vehicle_key_title'),
+                        description = locale('error.unsupported_vehicle_key_description'),
+                        duration = 5000,
+                        position = 'center-right',
+                        type = 'error'
+                    })
+                    Wait(2000)
+                    SetVehicleDoorShut(vehicle, 5, false)
+                elseif Config.Notify == 'lation' then
+                    lation_ui:notify({
+                        title = locale('error.unsupported_vehicle_key_title'),
+                        message = locale('error.unsupported_vehicle_key_description'),
+                        type = 'error',
+                        duration = 5000,
+                        position = 'center-right'
+                    })
+                    Wait(2000)
+                    SetVehicleDoorShut(vehicle, 5, false)
+                else
+                    lib.print.error(locale('error.notification_warning'))
+                    SetVehicleDoorShut(vehicle, 5, false)
+                end
             end
         else
+            -- Vehicle Keys Aren't Required
             vehicleClosetProgress(vehicle)
         end
     elseif Config.Framework == 'qbx' then
@@ -479,13 +621,31 @@ local function hasKeys(vehicle)
                 if hasKey then
                     vehicleClosetProgress(vehicle)
                 else
-                    lib.notify({
-                        title = locale('error.vehicle_keys_error_title'),
-                        description = locale('error.vehicle_keys_error_description'),
-                        duration = 5000,
-                        position = 'center-right',
-                        type = 'error'
-                    })
+                    -- Player Doesn't Have Keys
+                    if Config.Notify == 'ox' then
+                        lib.notify({
+                            title = locale('error.vehicle_keys_error_title'),
+                            description = locale('error.vehicle_keys_error_description'),
+                            duration = 5000,
+                            position = 'center-right',
+                            type = 'error'
+                        })
+                        Wait(2000)
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    elseif Config.Notify == 'lation' then
+                        lation_ui:notify({
+                            title = locale('error.vehicle_keys_error_title'),
+                            message = locale('error.vehicle_keys_error_description'),
+                            type = 'error',
+                            duration = 5000,
+                            position = 'center-right'
+                        })
+                        Wait(2000)
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    else
+                        lib.print.error(locale('error.notification_warning'))
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    end
                 end
             elseif Config.VehicleKeys.type == 'wasabi' then
                 local wasabi_carlock = exports.wasabi_carlock
@@ -493,40 +653,71 @@ local function hasKeys(vehicle)
                 if hasKey then
                     vehicleClosetProgress(vehicle)
                 else
+                    -- Player Doesn't Have Keys
+                    if Config.Notify == 'ox' then
+                        lib.notify({
+                            title = locale('error.vehicle_keys_error_title'),
+                            description = locale('error.vehicle_keys_error_description'),
+                            duration = 5000,
+                            position = 'center-right',
+                            type = 'error'
+                        })
+                        Wait(2000)
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    elseif Config.Notify == 'lation' then
+                        lation_ui:notify({
+                            title = locale('error.vehicle_keys_error_title'),
+                            message = locale('error.vehicle_keys_error_description'),
+                            type = 'error',
+                            duration = 5000,
+                            position = 'center-right'
+                        })
+                        Wait(2000)
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    else
+                        lib.print.error(locale('error.notification_warning'))
+                        SetVehicleDoorShut(vehicle, 5, false)
+                    end
+                end
+            else
+                -- Unsupported Vehicle Key Resource
+                if Config.Notify == 'ox' then
                     lib.notify({
-                        title = locale('error.vehicle_keys_error_title'),
-                        description = locale('error.vehicle_keys_error_description'),
+                        title = locale('error.unsupported_vehicle_key_title'),
+                        description = locale('error.unsupported_vehicle_key_description'),
                         duration = 5000,
                         position = 'center-right',
                         type = 'error'
                     })
+                    Wait(2000)
+                    SetVehicleDoorShut(vehicle, 5, false)
+                elseif Config.Notify == 'lation' then
+                    lation_ui:notify({
+                        title = locale('error.unsupported_vehicle_key_title'),
+                        message = locale('error.unsupported_vehicle_key_description'),
+                        type = 'error',
+                        duration = 5000,
+                        position = 'center-right'
+                    })
+                    Wait(2000)
+                    SetVehicleDoorShut(vehicle, 5, false)
+                else
+                    lib.print.error(locale('error.notification_warning'))
+                    SetVehicleDoorShut(vehicle, 5, false)
                 end
-            else
-                lib.notify({
-                    title = locale('error.unsupported_vehicle_key_title'),
-                    description = locale('error.unsupported_vehicle_key_description'),
-                    duration = 5000,
-                    position = 'center-right',
-                    type = 'error'
-                })
             end
         else
+            -- Vehicle Keys Aren't Required
             vehicleClosetProgress(vehicle)
         end
     else
-        lib.notify({
-            title = locale('error.unsupported_framework_error_title'),
-            description = locale('error.unsupported_framework_error_description'),
-            duration = 5000,
-            position = 'center-right',
-            type = 'error'
-        })
+        lib.print.error(locale('error.unsupported_framework_error_description'))
         Wait(2000)
         SetVehicleDoorShut(vehicle, 5, false)
     end
 end
 
-RegisterNetEvent('stark_vehiclecloset:client:changeClothes', function()
+RegisterNetEvent('stark_vehiclecloset:client:changeClothing', function()
     if not GetInvokingResource() then return end
     if Config.Framework == 'qb' then
         TriggerServerEvent('InteractSound_SV:PlayOnSource', 'Clothes1', 0.4)
@@ -549,7 +740,8 @@ CreateThread(function()
                         local Vehicle = entity
                         SetVehicleDoorOpen(Vehicle, 5, false, false)
                         hasKeys(Vehicle)
-                    end
+                    end,
+                    job = 'all'
                 }
             },
             distance = 3.0
@@ -568,12 +760,6 @@ CreateThread(function()
             end
         })
     else
-        lib.notify({
-            title = locale('error.unsupported_target_title'),
-            description = locale('error.unsupported_target_description'),
-            duration = 5000,
-            position = 'center-right',
-            type = 'error'
-        })
+        lib.print.error(locale('error.unsupported_target_description'))
     end
 end)

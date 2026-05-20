@@ -55,10 +55,13 @@ Stark Vehicle Closet is a resource that allows for players to change their outfi
 4. qb-vehiclekeys, qbx_vehiclekeys, or wasabi_carlock
 5. qb-menu (QBCore)
 6. [interact-sound](https://github.com/qbcore-framework/interact-sound) **OPTIONAL FOR QBOX**
+7. qb-clothing or illenium-appearance
 
 # Coming Soon
 1. Renewed Vehiclekeys Support
     - Preview or Purchase: [Renewed Vehiclekeys](https://renewed.tebex.io/package/5885692)
+2. Wasabi Scripts Complete UI Kit Support
+    - Preview or Purchase: [Wasabi Complete UI Kit](https://www.wasabiscripts.com/product/7037645)
 
 # Previews
 

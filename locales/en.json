@@ -14,6 +14,7 @@
     "error": {
         "framework_warning": "The Framework Could Not Be Initialized!",
         "framework_error_description": "This Sound Feature Is Only For The QBCore Framework!",
+        "notification_warning": "An Unsupported Notification Type Was Selected In The Config!",
         "cancellation_title": "Cancelled",
         "cancellation_description": "Cancelled Opening The Closet!",
         "vehicle_keys_error_title": "Missing Keys",
