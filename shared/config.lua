@@ -7,12 +7,12 @@ return {
 
     Target = 'ox',     -- supported: 'qb' or 'ox'
 
-    Menu = 'ox',       -- supported: 'qb', 'ox', or 'lation'
+    Menu = 'lation',   -- supported: 'qb', 'ox', or 'lation'
 
-    Notify = 'ox',     -- supported: 'qb', 'ox', or 'lation'
+    Notify = 'lation', -- supported: 'qb', 'ox', or 'lation'
 
     Progress = {
-        style = 'ox_circle', -- supported: 'qb', 'ox_bar', 'ox_circle', or 'lation'
+        style = 'lation', -- supported: 'qb', 'ox_bar', 'ox_circle', or 'lation'
         duration = 2000
     },
 
